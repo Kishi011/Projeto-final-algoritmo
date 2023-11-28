@@ -1,4 +1,7 @@
+import java.util.Scanner;
+
 public class Usuario {
+  protected Scanner scan = new Scanner(System.in);
   private String login;
   private String senha;
   
@@ -28,5 +31,13 @@ public class Usuario {
   
   public void menu() {
       
+  }
+
+  public void main() {
+    
+  }
+
+  protected void trocaPerfil() {
+    
   }
 }
