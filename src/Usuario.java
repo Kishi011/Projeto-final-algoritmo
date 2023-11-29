@@ -1,10 +1,10 @@
-import java.util.Scanner;
-
 public interface Usuario {
-  Scanner scan = new Scanner(System.in);
-  
-  public String getLogin();
-  
+  String getLogin();
+
+  void listarProdutos();
+
+  void cadastrarProduto();
+
   void menu();
 
   public void main();
