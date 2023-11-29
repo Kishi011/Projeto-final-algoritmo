@@ -21,7 +21,11 @@ public class Sistema {
                         user.main();
                     break;
                 case 2:
-                    if(login(Files.USER_LOGIN_FILE) != 0)
+                    if(login(Files.FUNCIONARIO_LOGIN_FILE) != 0)
+                        user.main();
+                    break;
+                case 3:
+                    if(login(Files.CLIENTE_LOGIN_FILE) != 0)
                         user.main();
                     break;
                 default:
@@ -33,6 +37,8 @@ public class Sistema {
     
     private static int criaConta(Files file) {
         try {
+            System.out.println("Nenhum registro encontrado");
+            System.out.println("Criando conta...");
             FileWriter fw = new FileWriter(file.getFilePath());
             System.out.print("login: ");
             String login = scan.next();
@@ -42,7 +48,7 @@ public class Sistema {
             fw.write(senha + "\n");
             fw.close();
 
-            user = file.getFilePath() == "admin_login.txt" ? new Admin(login) : new Funcionario(login);
+            atribuiUsuario(file, login);
 
             return 1;
         } catch(Exception e) {
@@ -56,7 +62,7 @@ public class Sistema {
             File f = new File(file.getFilePath());
             if(!f.canRead()) // checa se o arquivo não existe, caso verdadeiro ele cria
                 if(f.createNewFile()) // se ele consegue criar o arquivo
-                    return criaConta(file); // e se ele consegue criar uma conta, então...
+                    return criaConta(file); // ele retorna sucesso se conseguir criar a conta
                 else
                     throw new Exception("Nao foi possivel criar o arquivo: " + file.getFilePath());
             else {
@@ -67,8 +73,12 @@ public class Sistema {
     
                 int tentativas = 3;
                 while(tentativas > 0) {
-                    if(validaLogin(login, senha, file) != null) return 1;
-                    tentativas--;
+                    if(validaLogin(login, senha, file) != null)
+                        return 1;
+                    else {
+                        tentativas--;
+                        System.out.println("Tentativas restantes: " + tentativas);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -84,17 +94,27 @@ public class Sistema {
         String senhaUser = scan.next();
         
         if(login.equals(loginUser) && senha.equals(senhaUser))
-            user = file.getFilePath() == "public/admin_login.txt" ? new Admin(login) : new Funcionario(login);
-        else
+            atribuiUsuario(file, login);
+        else {
             System.out.println("Login ou senha invalidos");
+        }
         
         return user;
     }
 
+    private static void atribuiUsuario(Files file, String login) {
+        switch(file) {
+            case ADMIN_LOGIN_FILE: user = new Admin(login); break;
+            case FUNCIONARIO_LOGIN_FILE: user = new Funcionario(login); break;
+            case CLIENTE_LOGIN_FILE: user = new Cliente(login); break;
+        }
+    }
+
     private static void menu() {
         System.out.println("MENU");
-        System.out.println("1 - LOGAR COMO ADMININASTROR");
-        System.out.println("2 - LOGAR COMO FUNCIONARIO");
+        System.out.println("1 - ENTRAR COMO ADMINISTRADOR");
+        System.out.println("2 - ENTRAR COMO FUNCIONARIO");
+        System.out.println("3 - ENTRAR COMO CLIENTE");
         System.out.println("0 - SAIR");
     }
 
