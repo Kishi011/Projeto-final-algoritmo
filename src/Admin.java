@@ -1,11 +1,13 @@
-public class Admin extends Usuario {
-    
+public class Admin implements Usuario {
+  String login;
+  String senha;
+
   public Admin() {
-      super();
+    
   }
   
   public Admin(String login) {
-      super(login);
+      this.login = login;
   }
   
   public void cadastrarUsuario() {
@@ -18,6 +20,7 @@ public class Admin extends Usuario {
 
   @Override
   public void main() {
+    System.out.println("Logado como Administrador");
     try {
         int opt;
         do {
@@ -57,4 +60,9 @@ public class Admin extends Usuario {
       System.out.println("4 - TROCAR PERFIL");
       System.out.println("0 - SAIR");
   }
+
+@Override
+public String getLogin() {
+    return this.login;
+}
 }
