@@ -14,15 +14,15 @@ public class Funcionario extends Usuario {
     try {
       int opt;
       do {
-        this.menu();
+        menu();
         opt = Sistema.scan.nextInt();
         switch(opt) {
           case 1:
-            // menuGerenciarProdutos
+            gerenciarLanches();
             break;
           case 0: break;
           default:
-            System.out.println("Opcao invalida");
+            System.out.println("OPCAO INVALIDO");
             break;
         }
       } while(opt != 0);
@@ -31,18 +31,41 @@ public class Funcionario extends Usuario {
     }
   }
 
-  public void listarProdutos() {
+  public void listarLanches() {
     
   }
 
-  public void cadastrarProduto() {
+  public void cadastrarLanches() {
     
   }
-  
-  @Override
-  public void menu() {
+
+  private void gerenciarLanches() {
+    int opt;
+    do {
+      menuLanches();
+      opt = Sistema.scan.nextInt();
+      switch(opt) {
+        case 0: break;
+        case 1:
+          cadastrarLanches();
+          break;
+        case 2:
+          listarLanches();
+          break;
+      }
+    } while(opt != 0);
+  }
+
+  private void menuLanches() {
+    System.out.println("GERENCIAR LANCHES");
+    System.out.println("1 - CADASTRAR LANCHE");
+    System.out.println("2 - LISTAR LANCHES");
+    System.out.println("0 - VOLTAR");
+  }
+
+  private void menu() {
     System.out.println("MENU");
-    System.out.println("1 - GERENCIAR PRODUTOS");
+    System.out.println("1 - GERENCIAR LANCHES");
     System.out.println("2 - TROCAR PERFIL");
     System.out.println("0 - SAIR");
   }

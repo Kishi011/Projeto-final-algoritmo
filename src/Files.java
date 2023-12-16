@@ -1,16 +1,18 @@
+import java.io.File;
+
 public enum Files {
   
-  ADMIN_LOGIN_FILE("public/admin_login.txt"),
-  FUNCIONARIO_LOGIN_FILE("public/funcionario_login.txt"),
-  PRODUTOS_FILE("public/produtos.txt");
+  ADMIN_LOGIN_FILE(new File("public/admin_login.txt")),
+  FUNCIONARIO_LOGIN_FILE(new File("public/funcionario_login.txt")),
+  LANCHES_FILE(new File("public/lanches.txt"));
 
-  private String filePath;
+  private File f;
 
-  private Files(String filePath) {
-    this.filePath = filePath;
+  private Files(File f) {
+    this.f = f;
   }
 
-  public String getFilePath() {
-    return this.filePath;
+  public File getFile() {
+    return this.f;
   }
 }

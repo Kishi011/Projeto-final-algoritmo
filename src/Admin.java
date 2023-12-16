@@ -17,7 +17,7 @@ public class Admin extends Usuario {
     try {
       int opt;
       do {
-        this.menu();
+        menu();
         opt = Sistema.scan.nextInt();
         switch(opt) {
           case 0: break;
@@ -41,8 +41,7 @@ public class Admin extends Usuario {
     
   }
   
-  @Override
-  public void menu() {
+  private void menu() {
     System.out.println("MENU");
     System.out.println("1 - GERENCIAR FUNCIONARIOS");
     System.out.println("2 - GERENCIAR VENDAS");
@@ -70,7 +69,7 @@ public class Admin extends Usuario {
 
   private int cadastrarUsuario() {
     try {
-      File f = new File(Files.FUNCIONARIO_LOGIN_FILE.getFilePath());
+      File f = Files.FUNCIONARIO_LOGIN_FILE.getFile();
       if(!f.canRead()) { // checa se o arquivo não existe
         if(f.createNewFile())
           System.out.println("Criando arquivo...");
@@ -78,7 +77,7 @@ public class Admin extends Usuario {
             throw new Exception("Nao foi possivel criar o arquivo :(");
       }
     
-      FileWriter fw = new FileWriter(Files.FUNCIONARIO_LOGIN_FILE.getFilePath());
+      FileWriter fw = new FileWriter(f);
       System.out.print("login: ");
       String login = Sistema.scan.next();
       System.out.print("senha: ");
