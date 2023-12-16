@@ -1,4 +1,5 @@
 public class Lanche {
+  private int codigo;
   private String nome;
   private float valor;
   
@@ -6,9 +7,14 @@ public class Lanche {
     
   }
   
-  public Lanche(String nome, float valor) {
+  public Lanche(int codigo, String nome, float valor) {
+    this.codigo = codigo;
     this.nome = nome;
     this.valor = valor;
+  }
+
+  public int getCodigo() {
+    return this.codigo;
   }
   
   public String getNome() {

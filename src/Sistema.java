@@ -1,12 +1,12 @@
-import java.io.File;
 import java.util.Scanner;
-// import java.util.List;
+import java.io.File;
+import java.util.List;
 
 public class Sistema {
   public static Scanner scan = new Scanner(System.in);
   private static Usuario user = null;
   // TODO: fazer lista de lanches
-  // private List<Lanche> lanches;
+  private List<Lanche> lanches;
 
   public static void main(String[] args) {
     int opt;
@@ -28,20 +28,20 @@ public class Sistema {
     } while(opt != 0);
   }
 
-  private static int login(Files file) {
+  private static int login(Files files) {
     try {
-      File f = new File(file.getFilePath());
+        File f = files.getFile();
       if(!f.canRead()) // checa se o arquivo não existe
         System.out.println("Nenhum usuario cadastrado");
       else {
-        Scanner scanFile = new Scanner(new File(file.getFilePath()));
+        Scanner scanFile = new Scanner(f);
         String login = scanFile.next();
         String senha = scanFile.next();
         scanFile.close();
 
         int tentativas = 3;
         while(tentativas > 0) {
-          if(validaLogin(login, senha, file) != 0)
+          if(validaLogin(login, senha, files) != 0)
             return 1;
           else {
             tentativas--;
@@ -60,12 +60,11 @@ public class Sistema {
     String loginUser = scan.next();
     System.out.print("senha: ");
     String senhaUser = scan.next();
-    
+
     if(login.equals(loginUser) && senha.equals(senhaUser))
       return atribuiUsuario(file, login);
-    else {
+    else
       System.out.println("Login ou senha invalidos");
-    }
     
     return 0;
   }
