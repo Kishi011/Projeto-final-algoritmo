@@ -1,79 +1,88 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.util.Scanner;
-// import java.util.Queue;
+// import java.util.List;
 
 public class Sistema {
-    private Scanner scan = new Scanner(System.in);
-    private static final String USER_FILE = "public/usuario.txt";
-    private static final String ADMIN_FILE = "public/admin.txt";
-    private static Usuario user = null;
-    // private Queue<Lanche> lanches;
-    
-    public Sistema() {
-        try {
-            File fileUser = new File(USER_FILE);
-            if(!fileUser.canRead())
-                if(fileUser.createNewFile())
-                    this.criaConta();
-                else
-                    throw new Exception("Nao foi possivel criar o arquivo");
-            else
-                if(this.validaLogin() != null) {
-                    System.out.println("logado como: " + (user instanceof Admin ? "Admin" : "Funcionario"));
-                    this.main();
-                }
-        } catch(Exception e) {
-            System.out.println(e);
+  public static Scanner scan = new Scanner(System.in);
+  private static Usuario user = null;
+  // TODO: fazer lista de lanches
+  // private List<Lanche> lanches;
+
+  public static void main(String[] args) {
+    int opt;
+    do {
+      menu();
+      opt = scan.nextInt();
+      switch(opt) {
+        case 0: break;
+        case 1:
+          if(login(Files.ADMIN_LOGIN_FILE) != 0) user.main();
+          break;
+        case 2:
+          if(login(Files.FUNCIONARIO_LOGIN_FILE) != 0) user.main();
+          break;
+        default:
+          System.out.println("Opcao invalida");
+          break;
+      }
+    } while(opt != 0);
+  }
+
+  private static int login(Files file) {
+    try {
+      File f = new File(file.getFilePath());
+      if(!f.canRead()) // checa se o arquivo não existe
+        System.out.println("Nenhum usuario cadastrado");
+      else {
+        Scanner scanFile = new Scanner(new File(file.getFilePath()));
+        String login = scanFile.next();
+        String senha = scanFile.next();
+        scanFile.close();
+
+        int tentativas = 3;
+        while(tentativas > 0) {
+          if(validaLogin(login, senha, file) != 0)
+            return 1;
+          else {
+            tentativas--;
+            System.out.println("Tentativas restantes: " + tentativas);
+          }
         }
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return 0;
+  }
+  
+  private static int validaLogin(String login, String senha, Files file) {
+    System.out.print("login: ");
+    String loginUser = scan.next();
+    System.out.print("senha: ");
+    String senhaUser = scan.next();
+    
+    if(login.equals(loginUser) && senha.equals(senhaUser))
+      return atribuiUsuario(file, login);
+    else {
+      System.out.println("Login ou senha invalidos");
     }
     
-    private void criaConta() {
-        try {
-            FileWriter fw = new FileWriter(USER_FILE);
-            System.out.print("login: ");
-            String login = scan.next();
-            System.out.print("senha: ");
-            String senha = scan.next();
-            fw.write(login);
-            fw.write(senha);
-            fw.close();
-        } catch(Exception e) {
-            System.out.println(e);
-        }
+    return 0;
+  }
+
+  private static int atribuiUsuario(Files file, String login) {
+    switch(file) {
+      case ADMIN_LOGIN_FILE: user = new Admin(login); break;
+      case FUNCIONARIO_LOGIN_FILE: user = new Funcionario(login); break;
+      default: break;
     }
-    
-    private Usuario validaLogin() {
-        try {
-            Scanner scanUser = new Scanner(new File(USER_FILE));
-            Scanner scanAdmin = new Scanner(new File(ADMIN_FILE));
-            System.out.print("login: ");
-            String login = scan.next();
-            System.out.print("senha: ");
-            String senha = scan.next();
-            String loginUser = scanUser.next();
-            String senhaUser = scanUser.next();
-            String loginAdmin = scanAdmin.next();
-            String senhaAdmin = scanAdmin.next();
-            scanUser.close();
-            scanAdmin.close();
-            if(login.equals(loginUser) && senha.equals(senhaUser))
-               user = new Funcionario(login);
-               
-            else if(login.equals(loginAdmin) && senha.equals(senhaAdmin))
-                user = new Admin(login);
-                
-            else
-                System.out.println("Login ou senha invalidos");
-            
-        } catch(Exception e) {
-            System.out.println(e);
-        }
-        
-        return user;
-    }
-	
-	public void main() {
-	    user.menu();
-	}
+    return 1;
+  }
+
+  private static void menu() {
+    System.out.println("MENU");
+    System.out.println("1 - ENTRAR COMO ADMINISTRADOR");
+    System.out.println("2 - ENTRAR COMO FUNCIONARIO");
+    System.out.println("0 - SAIR");
+  }
 }

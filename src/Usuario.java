@@ -1,32 +1,19 @@
 public class Usuario {
-  private String login;
-  private String senha;
-  
+  public String login;
+
   public Usuario() {
-      
+
   }
-  
+
   public Usuario(String login) {
-      this.login = login;
+    this.login = login;
   }
-  
-  public String getLogin() {
-      return this.login;
+
+  void menu() {
+
   }
-  
-  public String getSenha() {
-      return this.senha;
-  }
-  
-  public void listarProdutos() {
-      
-  }
-  
-  public void cadastrarProduto() {
-      
-  }
-  
-  public void menu() {
-      
+
+  public void main() {
+
   }
 }
