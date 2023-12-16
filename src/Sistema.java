@@ -58,8 +58,7 @@ public class Sistema {
             scanUser.close();
             scanAdmin.close();
             if(login.equals(loginUser) && senha.equals(senhaUser))
-               user = new Funcionario(login);
-               
+              user = new Funcionario(login);
             else if(login.equals(loginAdmin) && senha.equals(senhaAdmin))
                 user = new Admin(login);
                 
