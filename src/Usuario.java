@@ -1,11 +1,19 @@
-public interface Usuario {
-  String getLogin();
+public class Usuario {
+  public String login;
 
-  void listarProdutos();
+  public Usuario() {
 
-  void cadastrarProduto();
+  }
 
-  void menu();
+  public Usuario(String login) {
+    this.login = login;
+  }
 
-  public void main();
+  void menu() {
+
+  }
+
+  public void main() {
+
+  }
 }

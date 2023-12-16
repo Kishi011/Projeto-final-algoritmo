@@ -1,18 +1,16 @@
-public class Funcionario implements Usuario {
-  String login;
-  String senha;
+public class Funcionario extends Usuario {
 
   public Funcionario() {
 
   }
-  
+
   public Funcionario(String login) {
-    this.login = login;
+    super(login);
   }
 
   @Override
   public void main() {
-    System.out.println("Logado como Funcionario");
+    System.out.println("Logado como Funcionario, Bem viade " + this.login + " :)");
     try {
       int opt;
       do {
@@ -33,12 +31,10 @@ public class Funcionario implements Usuario {
     }
   }
 
-  @Override
   public void listarProdutos() {
     
   }
 
-  @Override
   public void cadastrarProduto() {
     
   }
@@ -49,10 +45,5 @@ public class Funcionario implements Usuario {
     System.out.println("1 - GERENCIAR PRODUTOS");
     System.out.println("2 - TROCAR PERFIL");
     System.out.println("0 - SAIR");
-  }
-
-  @Override
-  public String getLogin() {
-    return this.login;
   }
 }
