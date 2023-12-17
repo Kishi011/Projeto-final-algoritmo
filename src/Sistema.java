@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileWriter;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +48,7 @@ public abstract class Sistema {
     try {
         File f = files.getFile(); // armazena o arquivo em uma referência de File
       if(!f.canRead()) // checa se o arquivo não existe
-        System.out.println("Nenhum usuario cadastrado");
+        System.out.println("NENHUM USUARIO CADASTRADO");
       else {
         Scanner scanFile = new Scanner(f); // cria uma instância de Scanner a partir do arquivo
         String login = scanFile.next(); // lê a primeiro coisa escrita no arquivo até encontrar um espaço
@@ -180,10 +183,57 @@ public abstract class Sistema {
         if(troco != 0)
           System.out.println("VALOR DE TROCO: R$ " + troco);
         adicionarPedido(c); // adiciona o pedido na fila de pedidos
+        registraVenda(c);
         return 1;
       }
     }
     return 0;
+  }
+
+  public static int verificaArquivo(File f) {
+    try {
+      if(!f.canRead()) { // checa se o arquivo não existe
+        if(f.createNewFile()) // se não existe tenta criar
+          System.out.println("Criando arquivo... " + f.getName());
+        else
+            throw new Exception("Nao foi possivel criar o arquivo :(");
+      }
+      return 1;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return 0;
+  }
+
+  private static void registraVenda(Carrinho c) {
+    try {
+      File f = Files.VENDAS_FILE.getFile();
+      if(verificaArquivo(f) != 0) {
+        FileWriter fw = new FileWriter(f);
+        Date date = Date.valueOf(LocalDate.now());
+        fw.append("Lanche: " + c + "\t" + "Valor total: " + c.getValor() + "\t" + "- " + date.toString() + "\n");
+        fw.close();
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public static void printarVendas() {
+    try {
+      File f = Files.VENDAS_FILE.getFile();
+      if(!f.canRead()) {
+        System.out.println("NENHUM REGISTRO DE VENDA");
+        return;
+      }
+      Scanner scanner = new Scanner(f);
+      while(scanner.hasNextLine()) {
+        System.out.println(scanner.nextLine());
+      }
+      scanner.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   /*
@@ -194,9 +244,8 @@ public abstract class Sistema {
       System.out.println("NENHUM PEDIDO NA FILA");
       return;
     }
-    int i = 1;
     pedidos.forEach(p -> { // para cada pedido executa o trecho de código
-      System.out.println("PEDIDO #" + i);
+      System.out.println("PEDIDO #" + p.getCodigo());
       System.out.println("VALOR: R$ " + p.getValor());
       System.out.println("-------------------------------");
     });

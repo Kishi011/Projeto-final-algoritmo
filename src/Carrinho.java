@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Carrinho {
@@ -38,11 +39,25 @@ public class Carrinho {
     itens.clear();
   }
 
+  public List getItens() {
+    return Collections.unmodifiableList(itens);
+  }
+
   public double getValor() {
     return valor;
   }
 
   public int getCodigo() {
     return codigo;
+  }
+
+  @Override
+  public String toString() {
+    String texto = "";
+    for(Lanche l : itens) {
+      texto += l.getNome();
+      texto += " ";
+    }
+    return texto;
   }
 }

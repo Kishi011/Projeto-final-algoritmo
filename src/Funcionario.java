@@ -66,6 +66,10 @@ public class Funcionario extends Usuario {
     Sistema.cadastrarLanches(l); // redireciona a função de cadastro do lanche para cadastrarLanches() passando o lanche criado
   }
 
+  private void despacharPedido() {
+    Sistema.despacharPedido();
+  }
+
   /*
    * função que faz um pedido no sistema
    */
@@ -109,6 +113,9 @@ public class Funcionario extends Usuario {
         case 2:
           listarPedidos();
           break;
+        case 3:
+          despacharPedido();
+          break;
       }
     } while(opt != 0);
   }
@@ -124,6 +131,7 @@ public class Funcionario extends Usuario {
     System.out.println("GERENCIAR PEDIDOS");
     System.out.println("1 - FAZER PEDIDO");
     System.out.println("2 - FILA DE PEDIDOS");
+    System.out.println("3 - DESPACHAR PEDIDO");
     System.out.println("0 - VOLTAR");
   }
 
