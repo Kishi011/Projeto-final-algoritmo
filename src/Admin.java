@@ -28,7 +28,7 @@ public class Admin extends Usuario { // classe Admin herda da classe Usuario
             gerenciarFuncionarios(); // entra em um submenu relacionado a funcionarios
             break;
           case 2:
-            // menuGerenciarVendas
+            gerenciarVendas(); // entra em um submenu relacionado a vendas
             break;
           default:
             System.out.println("OPCAO INVALIDA");
@@ -43,8 +43,28 @@ public class Admin extends Usuario { // classe Admin herda da classe Usuario
   /*
    * TODO: visualização do relatório de vendas pelo admin
    */
-  public void visualizarRelatorioVendas() {
-    
+  private void visualizarRelatorioVendas() {
+    System.out.println("RELATORIO DE VENDAS");
+    Sistema.printarVendas();
+  }
+
+  private void gerenciarVendas() {
+    int opt;
+    do {
+        menuVendas();
+        opt = Sistema.scan.nextInt();
+        switch(opt) {
+            case 0: break;
+            case 1: visualizarRelatorioVendas(); break;
+            default: System.out.println("OPCAO INVALIDA"); break;
+        }
+    } while(opt != 0);
+  }
+
+  private void menuVendas() {
+    System.out.println("GERENCIAR VENDAS");
+    System.out.println("1 - VISUALIZAR RELATORIO DE VENDAS");
+    System.out.println("0 - VOLTAR");
   }
   
   private void menu() {
@@ -57,7 +77,7 @@ public class Admin extends Usuario { // classe Admin herda da classe Usuario
   /*
    * controla o fluxo para funções relacionadas ao controle de funcionários
    */
-  public void gerenciarFuncionarios() {
+  private void gerenciarFuncionarios() {
     int opt;
     do {
         menuFuncionarios(); // printa o submenu de funcionários
@@ -82,23 +102,18 @@ public class Admin extends Usuario { // classe Admin herda da classe Usuario
   private int cadastrarUsuario() {
     try {
       File f = Files.FUNCIONARIO_LOGIN_FILE.getFile();
-      if(!f.canRead()) { // checa se o arquivo não existe
-        if(f.createNewFile()) // se não existe tenta criar
-          System.out.println("Criando arquivo... " + f.getName());
-        else
-            throw new Exception("Nao foi possivel criar o arquivo :(");
+      if(Sistema.verificaArquivo(f) != 0) {
+        FileWriter fw = new FileWriter(f); // abre o arquivo para escrita
+        System.out.print("login: ");
+        String login = Sistema.scan.next(); // pega o input do usuário e guarda em login
+        System.out.print("senha: ");
+        String senha = Sistema.scan.next(); // pega o input do usuário e guarda em senha
+        fw.write(login + " "); // escreve no arquivo o login
+        fw.write(senha + "\n"); // escreve no arquivo a senha e quebra a linha
+        fw.close(); // fecha o arquivo
+  
+        return 1;
       }
-    
-      FileWriter fw = new FileWriter(f); // abre o arquivo para escrita
-      System.out.print("login: ");
-      String login = Sistema.scan.next(); // pega o input do usuário e guarda em login
-      System.out.print("senha: ");
-      String senha = Sistema.scan.next(); // pega o input do usuário e guarda em senha
-      fw.write(login + " "); // escreve no arquivo o login
-      fw.write(senha + "\n"); // escreve no arquivo a senha e quebra a linha
-      fw.close(); // fecha o arquivo
-
-      return 1;
     } catch(Exception e) {
       System.out.println(e.getMessage());
     }
