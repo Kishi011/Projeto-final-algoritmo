@@ -8,6 +8,9 @@ public class Funcionario extends Usuario {
     super(login);
   }
 
+  /*
+   * sobreescreve a função main da classe Usuario
+   */
   @Override
   public void main() {
     System.out.println("Logado como Funcionario, Bem viade " + login + " :)");
@@ -19,10 +22,10 @@ public class Funcionario extends Usuario {
         switch(opt) {
           case 0: break;
           case 1:
-            gerenciarLanches();
+            gerenciarLanches(); // entra em um submenu relacionado a lanches
             break;
           case 2:
-            gerenciarPedidos();
+            gerenciarPedidos(); // entra em um submenu relacionado a pedidos
             break;
           case 3: break;
           default:
@@ -35,28 +38,44 @@ public class Funcionario extends Usuario {
     }
   }
 
+  /*
+   * função que lista os pedidos no sistema
+   */
   private void listarPedidos() {
-    Sistema.filaPedidos();
+    Sistema.filaPedidos(); // delega a função para a função filaPedidos() na classe Sistema
   }
 
+  /*
+   * função que lista os lanches no sistema
+   */
   private void listarLanches() {
-    Sistema.listarLanches();
+    Sistema.listarLanches(); // delega a função para a função listarLanches() na classe Sistema
   }
 
+  /*
+   * função que cadastra um lanche no sistema
+   */
   private void cadastrarLanches() {
+    System.out.print("Codigo: ");
+    int codigo = Sistema.scan.nextInt();
     System.out.print("Nome: ");
     String nome = Sistema.scan.next();
     System.out.print("Preco: ");
     double preco = Double.valueOf(Sistema.scan.next());
-    Lanche l = new Lanche(Carrinho.ultimoCodigo, nome, preco);
-    Carrinho.ultimoCodigo++;
-    Sistema.cadastrarLanches(l);
+    Lanche l = new Lanche(codigo, nome, preco); // instancia um novo Lanche
+    Sistema.cadastrarLanches(l); // redireciona a função de cadastro do lanche para cadastrarLanches() passando o lanche criado
   }
 
+  /*
+   * função que faz um pedido no sistema
+   */
   private int fazerPedido() {
-    return Sistema.fazerPedido();
+    return Sistema.fazerPedido(); // delega a função para a função fazerPedido() na classe Sistema
   }
 
+  /*
+   * controla o fluxo para funções relacionadas ao controle de lanches
+   */
   private void gerenciarLanches() {
     int opt;
     do {
@@ -74,6 +93,9 @@ public class Funcionario extends Usuario {
     } while(opt != 0);
   }
 
+  /*
+   * controla o fluxo para funções relacionadas ao controle de pedidos
+   */
   private void gerenciarPedidos() {
     int opt;
     do {
