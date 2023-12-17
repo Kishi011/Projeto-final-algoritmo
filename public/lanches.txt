@@ -1,0 +1,34 @@
+Comida-
+#000 Especial Frango 26.30
+#001 Especial Carne 26.30
+#002 Espedial Carne Duplo 32.50
+#003 Especial Queijo 26.30
+#004 Especial Multi-Queijo 36.30
+#005 Hambúrguer Carne Simples 9.40
+#006 Hambúrguer Queijo Simples 12.60
+#007 Completo Carnes 43.80
+#008 Completo Salada 47.50
+#009 Completo Queijos 47.50
+
+Acompanhamento-
+#010 Nuggets 20un 43.80
+#011 Nuggets 40un 75.00
+#012 Batata Pequena 10.00
+#013 Batata Média 15.00
+#014 Batata Grande 16.30
+#015 Batata Cheddar 18.80
+#016 Salada Simples 20.00
+#017 Molho Tradicional 3.10
+#018 Molho Especial 3.10
+#019 Molho Secreto 3.10
+
+Sobremesas-
+#020 Pote Simples 20.00
+#021 Pote Completo 25.00
+#022 Sundae Simples 16.30
+#023 Milkshake 400ml 25.00
+#024 Torta 10.00 
+
+Bebidas-
+#025 Coca Lata 9.40
+#026 Guaraná Lata 9.40
