@@ -1,16 +1,25 @@
-public enum Files {
+import java.io.File;
+
+/*
+ * classe para controlar os arquivos do sistema
+ */
+public enum Files { // classe enumeradora do java, serve para criar instâncias constantes que não se alteram
   
-  ADMIN_LOGIN_FILE("public/admin_login.txt"),
-  FUNCIONARIO_LOGIN_FILE("public/funcionario_login.txt"),
-  PRODUTOS_FILE("public/produtos.txt");
+  ADMIN_LOGIN_FILE(new File("public/admin_login.txt")), // instância constante de arquivo de registro do admin
+  FUNCIONARIO_LOGIN_FILE(new File("public/funcionario_login.txt")), // instância constante de arquivo de registro de funcionarios
+  LANCHES_FILE(new File("public/lanches.txt")), // instância constante de arquivo de registro de lanches
+  VENDAS_FILE(new File("public/vendas.txt")); // instância constante de arquivo do relatório de vendas
 
-  private String filePath;
+  private File f; // recebe um atributo do tipo File
 
-  private Files(String filePath) {
-    this.filePath = filePath;
+  private Files(File f) {
+    this.f = f;
   }
 
-  public String getFilePath() {
-    return this.filePath;
+  /*
+   * retorna o arquivo da instância
+   */
+  public File getFile() {
+    return this.f;
   }
 }

@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 
-public class Admin extends Usuario {
+public class Admin extends Usuario { // classe Admin herda da classe Usuario
 
   public Admin() {
     
@@ -11,21 +11,24 @@ public class Admin extends Usuario {
     super(login);
   }
 
+  /*
+   * sobreescreve a função main da classe Usuario
+   */
   @Override
   public void main() {
     System.out.println("Logado como Administrador");
     try {
       int opt;
       do {
-        this.menu();
+        menu();
         opt = Sistema.scan.nextInt();
         switch(opt) {
           case 0: break;
           case 1:
-            gerenciarFuncionarios();
+            gerenciarFuncionarios(); // entra em um submenu relacionado a funcionarios
             break;
           case 2:
-            // menuGerenciarVendas
+            gerenciarVendas(); // entra em um submenu relacionado a vendas
             break;
           default:
             System.out.println("OPCAO INVALIDA");
@@ -37,22 +40,47 @@ public class Admin extends Usuario {
     }
   }
   
-  public void visualizarRelatorioVendas() {
-    
+  /*
+   * TODO: visualização do relatório de vendas pelo admin
+   */
+  private void visualizarRelatorioVendas() {
+    System.out.println("RELATORIO DE VENDAS");
+    Sistema.printarVendas();
+  }
+
+  private void gerenciarVendas() {
+    int opt;
+    do {
+        menuVendas();
+        opt = Sistema.scan.nextInt();
+        switch(opt) {
+            case 0: break;
+            case 1: visualizarRelatorioVendas(); break;
+            default: System.out.println("OPCAO INVALIDA"); break;
+        }
+    } while(opt != 0);
+  }
+
+  private void menuVendas() {
+    System.out.println("GERENCIAR VENDAS");
+    System.out.println("1 - VISUALIZAR RELATORIO DE VENDAS");
+    System.out.println("0 - VOLTAR");
   }
   
-  @Override
-  public void menu() {
+  private void menu() {
     System.out.println("MENU");
     System.out.println("1 - GERENCIAR FUNCIONARIOS");
     System.out.println("2 - GERENCIAR VENDAS");
     System.out.println("0 - TROCAR PERFIL");
   }
 
-  public void gerenciarFuncionarios() {
+  /*
+   * controla o fluxo para funções relacionadas ao controle de funcionários
+   */
+  private void gerenciarFuncionarios() {
     int opt;
     do {
-        menuFuncionarios();
+        menuFuncionarios(); // printa o submenu de funcionários
         opt = Sistema.scan.nextInt();
         switch(opt) {
             case 0: break;
@@ -68,26 +96,24 @@ public class Admin extends Usuario {
     System.out.println("0 - VOLTAR");
   }
 
+  /*
+   * cria um novo registro no arquivo de funcionários
+   */
   private int cadastrarUsuario() {
     try {
-      File f = new File(Files.FUNCIONARIO_LOGIN_FILE.getFilePath());
-      if(!f.canRead()) { // checa se o arquivo não existe
-        if(f.createNewFile())
-          System.out.println("Criando arquivo...");
-        else
-            throw new Exception("Nao foi possivel criar o arquivo :(");
+      File f = Files.FUNCIONARIO_LOGIN_FILE.getFile();
+      if(Sistema.verificaArquivo(f) != 0) {
+        FileWriter fw = new FileWriter(f); // abre o arquivo para escrita
+        System.out.print("login: ");
+        String login = Sistema.scan.next(); // pega o input do usuário e guarda em login
+        System.out.print("senha: ");
+        String senha = Sistema.scan.next(); // pega o input do usuário e guarda em senha
+        fw.write(login + " "); // escreve no arquivo o login
+        fw.write(senha + "\n"); // escreve no arquivo a senha e quebra a linha
+        fw.close(); // fecha o arquivo
+  
+        return 1;
       }
-    
-      FileWriter fw = new FileWriter(Files.FUNCIONARIO_LOGIN_FILE.getFilePath());
-      System.out.print("login: ");
-      String login = Sistema.scan.next();
-      System.out.print("senha: ");
-      String senha = Sistema.scan.next();
-      fw.write(login + " ");
-      fw.write(senha + "\n");
-      fw.close();
-
-      return 1;
     } catch(Exception e) {
       System.out.println(e.getMessage());
     }

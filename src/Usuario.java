@@ -9,10 +9,6 @@ public class Usuario {
     this.login = login;
   }
 
-  void menu() {
-
-  }
-
   public void main() {
 
   }
