@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 
-public class Admin extends Usuario {
+public class Admin extends Usuario { // classe Admin herda da classe Usuario
 
   public Admin() {
     
@@ -11,6 +11,9 @@ public class Admin extends Usuario {
     super(login);
   }
 
+  /*
+   * sobreescreve a função main da classe Usuario
+   */
   @Override
   public void main() {
     System.out.println("Logado como Administrador");
@@ -22,7 +25,7 @@ public class Admin extends Usuario {
         switch(opt) {
           case 0: break;
           case 1:
-            gerenciarFuncionarios();
+            gerenciarFuncionarios(); // entra em um submenu relacionado a funcionarios
             break;
           case 2:
             // menuGerenciarVendas
@@ -37,6 +40,9 @@ public class Admin extends Usuario {
     }
   }
   
+  /*
+   * TODO: visualização do relatório de vendas pelo admin
+   */
   public void visualizarRelatorioVendas() {
     
   }
@@ -48,10 +54,13 @@ public class Admin extends Usuario {
     System.out.println("0 - TROCAR PERFIL");
   }
 
+  /*
+   * controla o fluxo para funções relacionadas ao controle de funcionários
+   */
   public void gerenciarFuncionarios() {
     int opt;
     do {
-        menuFuncionarios();
+        menuFuncionarios(); // printa o submenu de funcionários
         opt = Sistema.scan.nextInt();
         switch(opt) {
             case 0: break;
@@ -67,24 +76,27 @@ public class Admin extends Usuario {
     System.out.println("0 - VOLTAR");
   }
 
+  /*
+   * cria um novo registro no arquivo de funcionários
+   */
   private int cadastrarUsuario() {
     try {
       File f = Files.FUNCIONARIO_LOGIN_FILE.getFile();
       if(!f.canRead()) { // checa se o arquivo não existe
-        if(f.createNewFile())
-          System.out.println("Criando arquivo...");
+        if(f.createNewFile()) // se não existe tenta criar
+          System.out.println("Criando arquivo... " + f.getName());
         else
             throw new Exception("Nao foi possivel criar o arquivo :(");
       }
     
-      FileWriter fw = new FileWriter(f);
+      FileWriter fw = new FileWriter(f); // abre o arquivo para escrita
       System.out.print("login: ");
-      String login = Sistema.scan.next();
+      String login = Sistema.scan.next(); // pega o input do usuário e guarda em login
       System.out.print("senha: ");
-      String senha = Sistema.scan.next();
-      fw.write(login + " ");
-      fw.write(senha + "\n");
-      fw.close();
+      String senha = Sistema.scan.next(); // pega o input do usuário e guarda em senha
+      fw.write(login + " "); // escreve no arquivo o login
+      fw.write(senha + "\n"); // escreve no arquivo a senha e quebra a linha
+      fw.close(); // fecha o arquivo
 
       return 1;
     } catch(Exception e) {
